@@ -30,8 +30,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/tsdb/record"
+	"github.com/BlaCkinkGJ/prometheus/model/timestamp"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/record"
 )
 
 const (

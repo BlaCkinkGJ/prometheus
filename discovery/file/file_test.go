@@ -29,7 +29,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 func TestMain(m *testing.M) {

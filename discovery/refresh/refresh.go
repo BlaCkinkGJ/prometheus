@@ -21,7 +21,7 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 var (

@@ -28,10 +28,10 @@ import (
 	compute "google.golang.org/api/compute/v1"
 	"google.golang.org/api/option"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/refresh"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/BlaCkinkGJ/prometheus/discovery"
+	"github.com/BlaCkinkGJ/prometheus/discovery/refresh"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/util/strutil"
 )
 
 const (

@@ -38,11 +38,11 @@ import (
 	"github.com/prometheus/common/promlog/flag"
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/prometheus/prometheus/documentation/examples/remote_storage/remote_storage_adapter/graphite"
-	"github.com/prometheus/prometheus/documentation/examples/remote_storage/remote_storage_adapter/influxdb"
-	"github.com/prometheus/prometheus/documentation/examples/remote_storage/remote_storage_adapter/opentsdb"
-	"github.com/prometheus/prometheus/prompb"
-	"github.com/prometheus/prometheus/storage/remote"
+	"github.com/BlaCkinkGJ/prometheus/documentation/examples/remote_storage/remote_storage_adapter/graphite"
+	"github.com/BlaCkinkGJ/prometheus/documentation/examples/remote_storage/remote_storage_adapter/influxdb"
+	"github.com/BlaCkinkGJ/prometheus/documentation/examples/remote_storage/remote_storage_adapter/opentsdb"
+	"github.com/BlaCkinkGJ/prometheus/prompb"
+	"github.com/BlaCkinkGJ/prometheus/storage/remote"
 )
 
 type config struct {

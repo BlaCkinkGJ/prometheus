@@ -22,9 +22,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb"
 )
 
 type backfillSample struct {

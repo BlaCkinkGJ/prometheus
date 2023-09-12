@@ -22,7 +22,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/prometheus/common/model"
 
-	"github.com/prometheus/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
 )
 
 var (

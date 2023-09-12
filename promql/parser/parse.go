@@ -26,9 +26,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/prometheus/common/model"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/model/timestamp"
+	"github.com/BlaCkinkGJ/prometheus/util/strutil"
 )
 
 var parserPool = sync.Pool{

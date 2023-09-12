@@ -16,11 +16,11 @@ package tsdb
 import (
 	"github.com/pkg/errors"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunkenc"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunks"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tombstones"
 )
 
 type mockIndexWriter struct {

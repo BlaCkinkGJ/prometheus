@@ -44,8 +44,8 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 const (

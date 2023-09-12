@@ -21,10 +21,10 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/promql/parser"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunkenc"
 )
 
 func (Matrix) Type() parser.ValueType { return parser.ValueTypeMatrix }

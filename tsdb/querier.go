@@ -21,13 +21,13 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	tsdb_errors "github.com/prometheus/prometheus/tsdb/errors"
-	"github.com/prometheus/prometheus/tsdb/index"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunkenc"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunks"
+	tsdb_errors "github.com/BlaCkinkGJ/prometheus/tsdb/errors"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/index"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tombstones"
 )
 
 // Bitmap used by func isRegexMetaCharacter to check whether a character needs to be escaped.

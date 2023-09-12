@@ -23,7 +23,7 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 const (

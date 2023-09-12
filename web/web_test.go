@@ -35,12 +35,12 @@ import (
 	prom_testutil "github.com/prometheus/client_golang/prometheus/testutil"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/notifier"
-	"github.com/prometheus/prometheus/rules"
-	"github.com/prometheus/prometheus/scrape"
-	"github.com/prometheus/prometheus/tsdb"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/BlaCkinkGJ/prometheus/config"
+	"github.com/BlaCkinkGJ/prometheus/notifier"
+	"github.com/BlaCkinkGJ/prometheus/rules"
+	"github.com/BlaCkinkGJ/prometheus/scrape"
+	"github.com/BlaCkinkGJ/prometheus/tsdb"
+	"github.com/BlaCkinkGJ/prometheus/util/testutil"
 )
 
 func TestMain(m *testing.M) {

@@ -20,9 +20,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/tsdb/encoding"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/encoding"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tombstones"
 )
 
 func TestRecord_EncodeDecode(t *testing.T) {

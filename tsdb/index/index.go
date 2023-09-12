@@ -31,12 +31,12 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	"github.com/prometheus/prometheus/tsdb/encoding"
-	tsdb_errors "github.com/prometheus/prometheus/tsdb/errors"
-	"github.com/prometheus/prometheus/tsdb/fileutil"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunks"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/encoding"
+	tsdb_errors "github.com/BlaCkinkGJ/prometheus/tsdb/errors"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/fileutil"
 )
 
 const (

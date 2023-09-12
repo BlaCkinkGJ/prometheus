@@ -31,9 +31,9 @@ import (
 	"github.com/prometheus/common/model"
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/documentation/examples/custom-sd/adapter"
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/documentation/examples/custom-sd/adapter"
+	"github.com/BlaCkinkGJ/prometheus/util/strutil"
 )
 
 var (

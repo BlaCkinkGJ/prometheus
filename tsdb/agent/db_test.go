@@ -26,15 +26,15 @@ import (
 	dto "github.com/prometheus/client_model/go"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/exemplar"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/storage/remote"
-	"github.com/prometheus/prometheus/tsdb"
-	"github.com/prometheus/prometheus/tsdb/record"
-	"github.com/prometheus/prometheus/tsdb/tsdbutil"
-	"github.com/prometheus/prometheus/tsdb/wal"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/BlaCkinkGJ/prometheus/model/exemplar"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/storage/remote"
+	"github.com/BlaCkinkGJ/prometheus/tsdb"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/record"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tsdbutil"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/wal"
+	"github.com/BlaCkinkGJ/prometheus/util/testutil"
 )
 
 func TestDB_InvalidSeries(t *testing.T) {

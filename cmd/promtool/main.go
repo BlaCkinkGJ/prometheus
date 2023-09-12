@@ -48,17 +48,17 @@ import (
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/file"
-	_ "github.com/prometheus/prometheus/discovery/install" // Register service discovery implementations.
-	"github.com/prometheus/prometheus/discovery/kubernetes"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/rulefmt"
-	"github.com/prometheus/prometheus/notifier"
-	"github.com/prometheus/prometheus/promql"
-	"github.com/prometheus/prometheus/scrape"
+	"github.com/BlaCkinkGJ/prometheus/config"
+	"github.com/BlaCkinkGJ/prometheus/discovery"
+	"github.com/BlaCkinkGJ/prometheus/discovery/file"
+	_ "github.com/BlaCkinkGJ/prometheus/discovery/install" // Register service discovery implementations.
+	"github.com/BlaCkinkGJ/prometheus/discovery/kubernetes"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/model/rulefmt"
+	"github.com/BlaCkinkGJ/prometheus/notifier"
+	"github.com/BlaCkinkGJ/prometheus/promql"
+	"github.com/BlaCkinkGJ/prometheus/scrape"
 )
 
 const (

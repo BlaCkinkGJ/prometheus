@@ -21,10 +21,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/util/teststorage"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/model/timestamp"
+	"github.com/BlaCkinkGJ/prometheus/promql/parser"
+	"github.com/BlaCkinkGJ/prometheus/util/teststorage"
 )
 
 func TestDeriv(t *testing.T) {

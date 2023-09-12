@@ -22,8 +22,8 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/textparse"
-	"github.com/prometheus/prometheus/scrape"
+	"github.com/BlaCkinkGJ/prometheus/model/textparse"
+	"github.com/BlaCkinkGJ/prometheus/scrape"
 )
 
 var (

@@ -24,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/BlaCkinkGJ/prometheus/util/testutil"
 )
 
 // As soon as prometheus starts responding to http request it should be able to

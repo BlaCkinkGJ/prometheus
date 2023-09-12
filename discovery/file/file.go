@@ -34,8 +34,8 @@ import (
 	"github.com/prometheus/common/model"
 	yaml "gopkg.in/yaml.v2"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 var (

@@ -41,17 +41,17 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	"github.com/prometheus/prometheus/tsdb/fileutil"
-	"github.com/prometheus/prometheus/tsdb/index"
-	"github.com/prometheus/prometheus/tsdb/record"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
-	"github.com/prometheus/prometheus/tsdb/tsdbutil"
-	"github.com/prometheus/prometheus/tsdb/wal"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/BlaCkinkGJ/prometheus/model/labels"
+	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunkenc"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/chunks"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/fileutil"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/index"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/record"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tombstones"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tsdbutil"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/wal"
+	"github.com/BlaCkinkGJ/prometheus/util/testutil"
 )
 
 func TestMain(m *testing.M) {
@@ -60,7 +60,7 @@ func TestMain(m *testing.M) {
 	flag.Parse()
 	defaultIsolationDisabled = !isolationEnabled
 
-	goleak.VerifyTestMain(m, goleak.IgnoreTopFunction("github.com/prometheus/prometheus/tsdb.(*SegmentWAL).cut.func1"), goleak.IgnoreTopFunction("github.com/prometheus/prometheus/tsdb.(*SegmentWAL).cut.func2"))
+	goleak.VerifyTestMain(m, goleak.IgnoreTopFunction("github.com/BlaCkinkGJ/prometheus/tsdb.(*SegmentWAL).cut.func1"), goleak.IgnoreTopFunction("github.com/BlaCkinkGJ/prometheus/tsdb.(*SegmentWAL).cut.func2"))
 }
 
 func openTestDB(t testing.TB, opts *Options, rngs []int64) (db *DB) {

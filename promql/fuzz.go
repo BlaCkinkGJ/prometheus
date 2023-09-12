@@ -20,8 +20,8 @@ package promql
 import (
 	"io"
 
-	"github.com/prometheus/prometheus/model/textparse"
-	"github.com/prometheus/prometheus/promql/parser"
+	"github.com/BlaCkinkGJ/prometheus/model/textparse"
+	"github.com/BlaCkinkGJ/prometheus/promql/parser"
 )
 
 // PromQL parser fuzzing instrumentation for use with

@@ -37,7 +37,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/prometheus/prometheus/prompb"
+	"github.com/BlaCkinkGJ/prometheus/prompb"
 )
 
 const maxErrMsgLen = 1024

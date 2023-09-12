@@ -29,9 +29,9 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/version"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/refresh"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery"
+	"github.com/BlaCkinkGJ/prometheus/discovery/refresh"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 const (

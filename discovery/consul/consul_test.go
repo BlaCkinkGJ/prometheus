@@ -28,7 +28,7 @@ import (
 	"go.uber.org/goleak"
 	"gopkg.in/yaml.v2"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/BlaCkinkGJ/prometheus/discovery/targetgroup"
 )
 
 func TestMain(m *testing.M) {
