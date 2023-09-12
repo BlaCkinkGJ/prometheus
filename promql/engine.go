@@ -646,10 +646,13 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 				// timestamp as that is when we ran the evaluation.
 				vector[i] = Sample{Metric: s.Metric, Point: Point{V: s.Points[0].V, T: start}}
 			}
+			fmt.Println("ValueTypeVector", vector)
 			return vector, warnings, nil
 		case parser.ValueTypeScalar:
+			fmt.Println("ValueTypeScalar", mat[0].Points[0].V, start)
 			return Scalar{V: mat[0].Points[0].V, T: start}, warnings, nil
 		case parser.ValueTypeMatrix:
+			fmt.Println("ValueTypeMatrix", mat)
 			return mat, warnings, nil
 		default:
 			panic(errors.Errorf("promql.Engine.exec: unexpected expression type %q", s.Expr.Type()))
