@@ -644,15 +644,13 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 			for i, s := range mat {
 				// Point might have a different timestamp, force it to the evaluation
 				// timestamp as that is when we ran the evaluation.
-				fmt.Println(">> ValueTypeVector", s.Metric, s.Points, start)
+				level.Info(ng.logger).Log("msg", "converting matrix to vector", "metric", s.Metric, "points", s.Points, "timestamp", start)
 				vector[i] = Sample{Metric: s.Metric, Point: Point{V: s.Points[0].V, T: start}}
 			}
 			return vector, warnings, nil
 		case parser.ValueTypeScalar:
-			fmt.Println(">> ValueTypeScalar", mat[0].Points[0].V, start)
 			return Scalar{V: mat[0].Points[0].V, T: start}, warnings, nil
 		case parser.ValueTypeMatrix:
-			fmt.Println(">> ValueTypeMatrix", mat)
 			return mat, warnings, nil
 		default:
 			panic(errors.Errorf("promql.Engine.exec: unexpected expression type %q", s.Expr.Type()))
@@ -812,6 +810,7 @@ func (ng *Engine) populateSeries(querier storage.Querier, s *parser.EvalStmt) {
 			evalRange = 0
 			hints.By, hints.Grouping = extractGroupsFromPath(path)
 			n.UnexpandedSeriesSet = querier.Select(false, hints, n.LabelMatchers...)
+			level.Info(ng.logger).Log("msg", "querying series", "series", n.UnexpandedSeriesSet, "hints", hints, "node", node.String())
 
 		case *parser.MatrixSelector:
 			evalRange = n.Range

@@ -16,7 +16,9 @@ package promql
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io/ioutil"
+	"math"
 	"os"
 	"sort"
 	"testing"
@@ -28,8 +30,10 @@ import (
 
 	"github.com/BlaCkinkGJ/prometheus/model/labels"
 	"github.com/BlaCkinkGJ/prometheus/model/timestamp"
+	"github.com/BlaCkinkGJ/prometheus/model/value"
 	"github.com/BlaCkinkGJ/prometheus/promql/parser"
 	"github.com/BlaCkinkGJ/prometheus/storage"
+	"github.com/BlaCkinkGJ/prometheus/tsdb/tsdbutil"
 )
 
 func TestMain(m *testing.M) {
@@ -2614,4 +2618,44 @@ func TestRangeQuery(t *testing.T) {
 			require.Equal(t, c.Result, res.Value)
 		})
 	}
+}
+
+type sample struct {
+	t int64
+	v float64
+}
+
+func (s sample) T() int64 {
+	return s.t
+}
+
+func (s sample) V() float64 {
+	return s.v
+}
+
+type samples []tsdbutil.Sample
+
+func (s samples) Get(i int) tsdbutil.Sample { return s[i] }
+func (s samples) Len() int                  { return len(s) }
+
+func TestVectorSingle(t *testing.T) {
+	ev := &evaluator{
+		lookbackDelta: 2 * time.Minute,
+	}
+	it := storage.NewMemoizedIterator(storage.NewListSeriesIterator(samples{
+		sample{t: 1, v: 2},
+		sample{t: 2, v: math.Float64frombits(value.StaleNaN)},
+		sample{t: 3, v: 4},
+		sample{t: 4, v: 5},
+		sample{t: 5, v: 6},
+		sample{t: 99, v: 8},
+		sample{t: 100, v: 9},
+		sample{t: 101, v: 10},
+	}), 2)
+	node := &parser.VectorSelector{
+		Offset: 0,
+	}
+	ts, v, ok := ev.vectorSelectorSingle(it, node, 2)
+	fmt.Println(ts, v, ok)
+	fmt.Println(v + 1)
 }
