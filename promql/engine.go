@@ -650,7 +650,7 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 			return vector, warnings, nil
 		case parser.ValueTypeScalar:
 			for i := range mat {
-				level.Info(ng.logger).Log("msg", i, "converting vector to point", "metric", mat[i].Metric, "points", mat[i].Points, "timestamp", start)
+				level.Info(ng.logger).Log("msg", "converting vector to point", "index", i, "metric", mat[i].Metric, "points", mat[i].Points, "timestamp", start)
 			}
 			return Scalar{V: mat[0].Points[0].V, T: start}, warnings, nil
 		case parser.ValueTypeMatrix:
@@ -1524,6 +1524,7 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 
 			for ts := ev.startTimestamp; ts <= ev.endTimestamp; ts += ev.interval {
 				_, v, ok := ev.vectorSelectorSingle(it, e, ts)
+				level.Info(ev.logger).Log("msg", "get series information", "series", fmt.Sprintf("%+v", e.Series[i]), "ts", ts, "v", v, "ok", ok)
 				if ok {
 					if ev.currentSamples < ev.maxSamples {
 						ss.Points = append(ss.Points, Point{V: v, T: ts})
