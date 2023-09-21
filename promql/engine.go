@@ -644,11 +644,14 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 			for i, s := range mat {
 				// Point might have a different timestamp, force it to the evaluation
 				// timestamp as that is when we ran the evaluation.
-				level.Info(ng.logger).Log("msg", "converting matrix to vector", "metric", s.Metric, "points", s.Points, "timestamp", start)
+				level.Info(ng.logger).Log("msg", "converting matrix to point", "metric", s.Metric, "points", s.Points, "timestamp", start)
 				vector[i] = Sample{Metric: s.Metric, Point: Point{V: s.Points[0].V, T: start}}
 			}
 			return vector, warnings, nil
 		case parser.ValueTypeScalar:
+			for i := range mat {
+				level.Info(ng.logger).Log("msg", i, "converting vector to point", "metric", mat[i].Metric, "points", mat[i].Points, "timestamp", start)
+			}
 			return Scalar{V: mat[0].Points[0].V, T: start}, warnings, nil
 		case parser.ValueTypeMatrix:
 			return mat, warnings, nil
@@ -850,19 +853,16 @@ func extractGroupsFromPath(p []parser.Node) (bool, []string) {
 	return false, nil
 }
 
-func checkAndExpandSeriesSet(ctx context.Context, expr parser.Expr) (storage.Warnings, error) {
+func checkAndExpandSeriesSet(ctx context.Context, lg log.Logger, expr parser.Expr) (storage.Warnings, error) {
 	switch e := expr.(type) {
 	case *parser.MatrixSelector:
-		return checkAndExpandSeriesSet(ctx, e.VectorSelector)
+		return checkAndExpandSeriesSet(ctx, lg, e.VectorSelector)
 	case *parser.VectorSelector:
 		if e.Series != nil {
 			return nil, nil
 		}
 		series, ws, err := expandSeriesSet(ctx, e.UnexpandedSeriesSet)
-		// get logger from the context
-		if lg, ok := ctx.Value(logKey).(log.Logger); ok {
-			level.Info(lg).Log("msg", "expanded series set", "series", fmt.Sprintf("%+v", series), "warnings", fmt.Sprintf("%+v", ws), "err", err)
-		}
+		level.Info(lg).Log("msg", "expanded series set", "series", fmt.Sprintf("%+v", series), "warnings", fmt.Sprintf("%+v", ws), "err", err)
 		e.Series = series
 		return ws, err
 	}
@@ -1314,7 +1314,7 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 		sel := arg.(*parser.MatrixSelector)
 		selVS := sel.VectorSelector.(*parser.VectorSelector)
 
-		ws, err := checkAndExpandSeriesSet(ev.ctx, sel)
+		ws, err := checkAndExpandSeriesSet(ev.ctx, ev.logger, sel)
 		warnings = append(warnings, ws...)
 		if err != nil {
 			ev.error(errWithWarnings{errors.Wrap(err, "expanding series"), warnings})
@@ -1509,7 +1509,7 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 		return String{V: e.Val, T: ev.startTimestamp}, nil
 
 	case *parser.VectorSelector:
-		ws, err := checkAndExpandSeriesSet(ev.ctx, e)
+		ws, err := checkAndExpandSeriesSet(ev.ctx, ev.logger, e)
 		if err != nil {
 			ev.error(errWithWarnings{errors.Wrap(err, "expanding series"), ws})
 		}
@@ -1640,7 +1640,7 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 
 // vectorSelector evaluates a *parser.VectorSelector expression.
 func (ev *evaluator) vectorSelector(node *parser.VectorSelector, ts int64) (Vector, storage.Warnings) {
-	ws, err := checkAndExpandSeriesSet(ev.ctx, node)
+	ws, err := checkAndExpandSeriesSet(ev.ctx, ev.logger, node)
 	if err != nil {
 		ev.error(errWithWarnings{errors.Wrap(err, "expanding series"), ws})
 	}
@@ -1722,7 +1722,7 @@ func (ev *evaluator) matrixSelector(node *parser.MatrixSelector) (Matrix, storag
 
 		it = storage.NewBuffer(durationMilliseconds(node.Range))
 	)
-	ws, err := checkAndExpandSeriesSet(ev.ctx, node)
+	ws, err := checkAndExpandSeriesSet(ev.ctx, ev.logger, node)
 	if err != nil {
 		ev.error(errWithWarnings{errors.Wrap(err, "expanding series"), ws})
 	}
