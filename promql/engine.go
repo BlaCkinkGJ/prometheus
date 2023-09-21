@@ -859,6 +859,10 @@ func checkAndExpandSeriesSet(ctx context.Context, expr parser.Expr) (storage.War
 			return nil, nil
 		}
 		series, ws, err := expandSeriesSet(ctx, e.UnexpandedSeriesSet)
+		// get logger from the context
+		if lg, ok := ctx.Value(logKey).(log.Logger); ok {
+			level.Info(lg).Log("msg", "expanded series set", "series", fmt.Sprintf("%+v", series), "warnings", fmt.Sprintf("%+v", ws), "err", err)
+		}
 		e.Series = series
 		return ws, err
 	}
@@ -1153,6 +1157,8 @@ func (ev *evaluator) rangeEval(prepSeries func(labels.Labels, *EvalSeriesHelper)
 	return mat, warnings
 }
 
+var logKey = struct{}{}
+
 // evalSubquery evaluates given SubqueryExpr and returns an equivalent
 // evaluated MatrixSelector in its place. Note that the Name and LabelMatchers are not set.
 func (ev *evaluator) evalSubquery(subq *parser.SubqueryExpr) (*parser.MatrixSelector, int, storage.Warnings) {
@@ -1194,6 +1200,9 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 	ctxWithSpan, span := otel.Tracer("").Start(ev.ctx, stats.InnerEvalTime.SpanOperation()+" eval "+reflect.TypeOf(expr).String())
 	ev.ctx = ctxWithSpan
 	defer span.End()
+
+	// inject logger to context
+	ev.ctx = context.WithValue(ev.ctx, logKey, ev.logger)
 
 	switch e := expr.(type) {
 	case *parser.AggregateExpr:
