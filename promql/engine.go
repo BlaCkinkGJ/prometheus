@@ -810,7 +810,13 @@ func (ng *Engine) populateSeries(querier storage.Querier, s *parser.EvalStmt) {
 			evalRange = 0
 			hints.By, hints.Grouping = extractGroupsFromPath(path)
 			n.UnexpandedSeriesSet = querier.Select(false, hints, n.LabelMatchers...)
-			level.Info(ng.logger).Log("msg", "querying series", "series", n.UnexpandedSeriesSet, "hints", hints, "node", node.String())
+			unexpandedSeriesSet := n.UnexpandedSeriesSet
+			series, _, err := expandSeriesSet(context.Background(), unexpandedSeriesSet)
+			if err != nil {
+				level.Error(ng.logger).Log("msg", "error expanding series set", "err", err)
+				return nil
+			}
+			level.Info(ng.logger).Log("msg", "querying series", "series", series, "hints", hints, "node", node.String())
 
 		case *parser.MatrixSelector:
 			evalRange = n.Range
