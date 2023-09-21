@@ -597,7 +597,7 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 	}
 	defer querier.Close()
 
-	ng.populateSeries(querier, s)
+	ng.populateSeries(ctx, querier, s)
 	prepareSpanTimer.Finish()
 
 	// Modify the offset of vector and matrix selectors for the @ modifier
@@ -644,13 +644,18 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *parser.Eval
 			for i, s := range mat {
 				// Point might have a different timestamp, force it to the evaluation
 				// timestamp as that is when we ran the evaluation.
-				level.Info(ng.logger).Log("msg", "converting matrix to point", "metric", s.Metric, "points", s.Points, "timestamp", start)
+
+				if isEnable, ok := ctx.Value("debug_abnormal_value_enabled").(bool); ok && isEnable {
+					level.Info(ng.logger).Log("msg", "converting matrix to point", "metric", s.Metric, "points", s.Points, "timestamp", start)
+				}
 				vector[i] = Sample{Metric: s.Metric, Point: Point{V: s.Points[0].V, T: start}}
 			}
 			return vector, warnings, nil
 		case parser.ValueTypeScalar:
-			for i := range mat {
-				level.Info(ng.logger).Log("msg", "converting vector to point", "index", i, "metric", mat[i].Metric, "points", mat[i].Points, "timestamp", start)
+			if isEnable, ok := ctx.Value("debug_abnormal_value_enabled").(bool); ok && isEnable {
+				for i := range mat {
+					level.Info(ng.logger).Log("msg", "converting vector to point", "index", i, "metric", mat[i].Metric, "points", mat[i].Points, "timestamp", start)
+				}
 			}
 			return Scalar{V: mat[0].Points[0].V, T: start}, warnings, nil
 		case parser.ValueTypeMatrix:
@@ -793,7 +798,7 @@ func (ng *Engine) getTimeRangesForSelector(s *parser.EvalStmt, n *parser.VectorS
 	return start, end
 }
 
-func (ng *Engine) populateSeries(querier storage.Querier, s *parser.EvalStmt) {
+func (ng *Engine) populateSeries(ctx context.Context, querier storage.Querier, s *parser.EvalStmt) {
 	// Whenever a MatrixSelector is evaluated, evalRange is set to the corresponding range.
 	// The evaluation of the VectorSelector inside then evaluates the given range and unsets
 	// the variable.
@@ -813,7 +818,9 @@ func (ng *Engine) populateSeries(querier storage.Querier, s *parser.EvalStmt) {
 			evalRange = 0
 			hints.By, hints.Grouping = extractGroupsFromPath(path)
 			n.UnexpandedSeriesSet = querier.Select(false, hints, n.LabelMatchers...)
-			level.Info(ng.logger).Log("msg", "querying series", "series", fmt.Sprintf("%+v", n.UnexpandedSeriesSet), "hints", hints, "node", node.String())
+			if isEnable, ok := ctx.Value("debug_abnormal_value_enabled").(bool); ok && isEnable {
+				level.Info(ng.logger).Log("msg", "querying series", "labels", fmt.Sprintf("%+v", n.LabelMatchers), "hints", hints, "node", node.String())
+			}
 
 		case *parser.MatrixSelector:
 			evalRange = n.Range
@@ -862,7 +869,12 @@ func checkAndExpandSeriesSet(ctx context.Context, lg log.Logger, expr parser.Exp
 			return nil, nil
 		}
 		series, ws, err := expandSeriesSet(ctx, e.UnexpandedSeriesSet)
-		level.Info(lg).Log("msg", "expanded series set", "series", fmt.Sprintf("%+v", series), "warnings", fmt.Sprintf("%+v", ws), "err", err)
+
+		if isEnable, ok := ctx.Value("debug_abnormal_value_enabled").(bool); ok && isEnable {
+			for i := range series {
+				level.Info(lg).Log("msg", "expanded series set", "series", fmt.Sprintf("%+v", series[i]), "warnings", fmt.Sprintf("%+v", ws), "err", err)
+			}
+		}
 		e.Series = series
 		return ws, err
 	}
@@ -1524,7 +1536,9 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, storage.Warnings) {
 
 			for ts := ev.startTimestamp; ts <= ev.endTimestamp; ts += ev.interval {
 				_, v, ok := ev.vectorSelectorSingle(it, e, ts)
-				level.Info(ev.logger).Log("msg", "get series information", "series", fmt.Sprintf("%+v", e.Series[i]), "ts", ts, "v", v, "ok", ok)
+				if isEnable, ok := ev.ctx.Value("debug_abnormal_value_enabled").(bool); ok && isEnable {
+					level.Info(ev.logger).Log("msg", "get series information", "series", fmt.Sprintf("%+v", e.Series[i]), "ts", ts, "v", v, "ok", ok)
+				}
 				if ok {
 					if ev.currentSamples < ev.maxSamples {
 						ss.Points = append(ss.Points, Point{V: v, T: ts})
